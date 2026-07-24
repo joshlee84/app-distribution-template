@@ -25,7 +25,8 @@ edit the workflow.
 2. Replace `app.py` with your script
 3. List your dependencies in `requirements.txt`
 4. Set `name` and `display_name` in `app.toml`
-5. Commit, push, then:
+5. Update the `icon.ico` and `icon.icns` files in `/assets`
+6. Commit, push, then:
 
 ```bash
 git tag v1.0.0

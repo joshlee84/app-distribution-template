@@ -20,6 +20,7 @@ jobs:
     outputs:
       app_name:       ${{ steps.read.outputs.app_name }}
       display_name:   ${{ steps.read.outputs.display_name }}
+      entrypoint:     ${{ steps.read.outputs.entrypoint }}
       python_version: ${{ steps.read.outputs.python_version }}
       pyi_args:       ${{ steps.read.outputs.pyi_args }}
       windows_target: ${{ steps.read.outputs.windows_target }}
