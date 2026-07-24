@@ -97,7 +97,6 @@ mistakes — a name with spaces, a missing entrypoint, an unknown build target.
 | Shrink the download | Add to `exclude_modules` |
 | Faster startup | `onefile = false` |
 | Console app instead of GUI | `windowed = false` |
-| Add an icon | `extra_args = ["--icon=assets/icon.ico"]` |
 
 ---
 
