@@ -61,7 +61,9 @@ jobs:
           pip install pyinstaller
 
       - name: Build with PyInstaller
-        run: pyinstaller ${{ needs.config.outputs.pyi_args }}
+        # Order: shared args, then this platform's icon flag (may be empty),
+        # then the entrypoint script last.
+        run: pyinstaller ${{ needs.config.outputs.pyi_args }} ${{ matrix.icon_arg }} ${{ needs.config.outputs.entrypoint }}
 
       - name: Package (Windows)
         if: runner.os == 'Windows'

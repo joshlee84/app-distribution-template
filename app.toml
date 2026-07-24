@@ -42,7 +42,7 @@ exclude_modules = [
 ]
 
 # Any other PyInstaller flags, one per entry.
-# Examples: "--icon=assets/icon.ico", "--add-data=data/rates.csv:."
+# Example: "--add-data=data/rates.csv:."
 extra_args = []
 
 

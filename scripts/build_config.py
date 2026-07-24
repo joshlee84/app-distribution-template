@@ -81,7 +81,24 @@ def build_outputs(cfg: dict) -> dict[str, str]:
     for extra in pyi.get("extra_args", []):
         args.append(str(extra))
 
-    args.append(entrypoint)
+    # NOTE: entrypoint is deliberately NOT appended here. The workflow adds it
+    # last, after the per-platform icon flag, so the positional script argument
+    # always comes at the very end of the command.
+
+    # ---- per-platform icon (optional) ------------------------------
+    # Windows needs a .ico, macOS needs a .icns -- they can't share one flag,
+    # so each platform gets its own, picked here. Missing files are simply
+    # skipped, so the template still works for apps with no icon.
+    assets = CONFIG_PATH.parent / "assets"
+    have_ico = (assets / "icon.ico").exists()
+    have_icns = (assets / "icon.icns").exists()
+
+    def icon_arg_for(label: str) -> str:
+        if label == "windows" and have_ico:
+            return "--icon=assets/icon.ico"
+        if label.startswith("macos") and have_icns:
+            return "--icon=assets/icon.icns"
+        return ""
 
     # ---- what each platform should package -------------------------
     # --windowed always produces a .app bundle on macOS, in both
@@ -98,7 +115,10 @@ def build_outputs(cfg: dict) -> dict[str, str]:
         fail("build.targets is empty -- nothing to build")
 
     matrix = {
-        "include": [{"os": VALID_TARGETS[t], "label": t} for t in targets]
+        "include": [
+            {"os": VALID_TARGETS[t], "label": t, "icon_arg": icon_arg_for(t)}
+            for t in targets
+        ]
     }
 
     return {
